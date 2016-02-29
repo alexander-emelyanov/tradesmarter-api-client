@@ -10,7 +10,8 @@ class ApiClient
      */
     protected $url;
 
-    public function construct($url){
+    public function construct($url)
+    {
         $this->url = $url;
     }
 
@@ -18,14 +19,16 @@ class ApiClient
      * Returns a list of supported countries.
      * @return \TradeSmarter\Response\Country[]
      */
-    public function countries(){
+    public function countries()
+    {
     }
 
     /**
      * @param \TradeSmarter\Request\Register $request
      * @return \TradeSmarter\Response\Register
      */
-    public function register($request){
+    public function register($request)
+    {
 
     }
 

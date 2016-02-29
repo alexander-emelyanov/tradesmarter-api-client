@@ -15,11 +15,12 @@ class Country
     public $name;
 
     /**
-     * @var integer
+     * @var int
      */
     public $dialCode;
 
-    public function __construct($id, $name, $dialCode){
+    public function __construct($id, $name, $dialCode)
+    {
         $this->id = $id;
         $this->name = $name;
         $this->dialCode = $dialCode;
