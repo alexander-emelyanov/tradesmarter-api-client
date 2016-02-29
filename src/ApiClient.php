@@ -4,7 +4,6 @@ namespace TradeSmarter;
 
 class ApiClient
 {
-
     /**
      * @var string
      */
@@ -17,6 +16,7 @@ class ApiClient
 
     /**
      * Returns a list of supported countries.
+     *
      * @return \TradeSmarter\Response\Country[]
      */
     public function countries()
@@ -25,6 +25,7 @@ class ApiClient
 
     /**
      * @param \TradeSmarter\Request\Register $request
+     *
      * @return \TradeSmarter\Response\Register
      */
     public function register($request)

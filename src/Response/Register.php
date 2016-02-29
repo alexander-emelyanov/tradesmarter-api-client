@@ -9,7 +9,8 @@ class Register
      */
     protected $id;
 
-    public function construct($id){
+    public function construct($id)
+    {
         $this->id = $id;
     }
 
@@ -17,7 +18,8 @@ class Register
      * Returns the newly created userID.
      * @return string
      */
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 }

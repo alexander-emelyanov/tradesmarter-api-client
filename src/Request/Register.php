@@ -31,6 +31,7 @@ class Register
 
     /**
      * @var string The user’s two-character ISO country code
+     *
      * @see \TradeSmarter\ApiClient::countries()
      */
     protected $country;
@@ -57,11 +58,12 @@ class Register
 
     /**
      * @var string Optional. Landing parameters to be assigned to the registered user (affiliate id, serial, campaign...etc).
-     * It should be encoded json. e.g. (PHP) json_encode(array('a_aid'=>'123456789', 'serial'=>'my-camp1'))
+     *             It should be encoded json. e.g. (PHP) json_encode(array('a_aid'=>'123456789', 'serial'=>'my-camp1'))
      */
     protected $params;
 
-    public function __construct($params = []){
+    public function __construct($params = [])
+    {
         foreach($params as $name => $value){
             $this->{$name} = $value;
         }
@@ -116,7 +118,7 @@ class Register
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isConfirmed()
     {
