@@ -15,6 +15,13 @@ class ApiClient
     }
 
     /**
+     * Returns a list of supported countries.
+     * @return \TradeSmarter\Response\Country[]
+     */
+    public function countries(){
+    }
+
+    /**
      * @param \TradeSmarter\Request\Register $request
      * @return \TradeSmarter\Response\Register
      */
