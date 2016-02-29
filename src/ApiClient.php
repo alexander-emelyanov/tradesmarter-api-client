@@ -30,7 +30,5 @@ class ApiClient
      */
     public function register($request)
     {
-
     }
-
 }
