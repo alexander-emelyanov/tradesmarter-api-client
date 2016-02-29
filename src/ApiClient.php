@@ -2,8 +2,6 @@
 
 namespace TradeSmarter;
 
-
 class ApiClient
 {
-
 }
