@@ -16,7 +16,7 @@ class Register
 
     /**
      * Returns the newly created userID.
-     * 
+     *
      * @return string
      */
     public function getId()
