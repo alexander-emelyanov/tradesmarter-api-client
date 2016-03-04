@@ -24,7 +24,7 @@ class ApiClient
     public function __construct($url, GuzzleHttp\ClientInterface $httpClient = null)
     {
         $this->url = $url;
-        $this->httpClient = $httpClient ? : new GuzzleHttp\Client();
+        $this->httpClient = $httpClient ?: new GuzzleHttp\Client();
     }
 
     /**
@@ -60,7 +60,7 @@ class ApiClient
         try{
             $serverResponse = $this->httpClient->post($url, ['form_params' => $data])->getBody()->getContents();
             return new Register(intval($serverResponse));
-        } catch (GuzzleHttp\Exception\ServerException $exception){
+        } catch (GuzzleHttp\Exception\ServerException $exception) {
             $serverResponse = $exception->getResponse()->getBody()->getContents();
             $this->processFailedResponse(new Payload($serverResponse));
         }
@@ -71,10 +71,10 @@ class ApiClient
         $errorCode = isset($payload['error']['code']) ? $payload['error']['code'] : null;
         switch ($errorCode) {
             case static::ERROR_EMAIL_ALREADY_EXISTS: {
-                throw new EmailAlreadyExists($payload, "Email already exists");
+                throw new EmailAlreadyExists($payload, 'Email already exists');
             }
             default: {
-                throw new Exception($payload, "Unknown error");
+                throw new Exception($payload, 'Unknown error');
             }
         }
     }
