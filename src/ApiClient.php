@@ -4,6 +4,7 @@ namespace TradeSmarter;
 
 use GuzzleHttp;
 use TradeSmarter\Exceptions\EmailAlreadyExists;
+use TradeSmarter\Responses\Country;
 use TradeSmarter\Responses\Register;
 
 class ApiClient
@@ -34,6 +35,14 @@ class ApiClient
      */
     public function countries()
     {
+        $url = $this->url . '/index/countries';
+        $response = $this->makeRequest($url);
+        $payload = new Payload($response);
+        $countries = [];
+        foreach ($payload->getData() as $countryInfo){
+            $countries[] = new Country($countryInfo['id'], $countryInfo['name'], $countryInfo['dialCode']);
+        }
+        return $countries;
     }
 
     /**
@@ -56,10 +65,18 @@ class ApiClient
             'landing' => json_encode($request->getParams()),
             'lead' => 0,
         ];
+        $response = $this->makeRequest($url, $data);
+        return new Register(intval($response));
+    }
 
+    /**
+     * @param $url
+     * @param $data
+     * @return string
+     */
+    protected function makeRequest($url, $data = []){
         try{
-            $serverResponse = $this->httpClient->post($url, ['form_params' => $data])->getBody()->getContents();
-            return new Register(intval($serverResponse));
+            return $this->httpClient->post($url, ['form_params' => $data])->getBody()->getContents();
         } catch (GuzzleHttp\Exception\ServerException $exception) {
             $serverResponse = $exception->getResponse()->getBody()->getContents();
             $this->processFailedResponse(new Payload($serverResponse));
