@@ -6,4 +6,7 @@ composer.phar
 # composer.lock
 
 # JetBrains IDE
-.idea
+/.idea
+
+# Temporary test file
+/test.php

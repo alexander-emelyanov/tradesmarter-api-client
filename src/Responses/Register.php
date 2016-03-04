@@ -1,6 +1,6 @@
 <?php
 
-namespace TradeSmarter\Response;
+namespace TradeSmarter\Responses;
 
 class Register
 {
@@ -9,7 +9,7 @@ class Register
      */
     protected $id;
 
-    public function construct($id)
+    public function __construct($id)
     {
         $this->id = $id;
     }

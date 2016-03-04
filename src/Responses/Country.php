@@ -1,6 +1,6 @@
 <?php
 
-namespace TradeSmarter\Response;
+namespace TradeSmarter\Responses;
 
 class Country
 {

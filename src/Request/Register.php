@@ -10,9 +10,9 @@ class Register
     protected $email;
 
     /**
-     * @var string Hash string of user's password (hash function - md5).
+     * @var string Password string of user's password.
      */
-    protected $hash;
+    protected $password;
 
     /**
      * @var string The user’s first name.
@@ -57,8 +57,7 @@ class Register
     protected $locale;
 
     /**
-     * @var string Optional. Landing parameters to be assigned to the registered user (affiliate id, serial, campaign...etc).
-     *             It should be encoded json. e.g. (PHP) json_encode(array('a_aid'=>'123456789', 'serial'=>'my-camp1'))
+     * @var array Optional. Landing parameters to be assigned to the registered user (affiliate id, serial, campaign...etc).
      */
     protected $params;
 
@@ -80,9 +79,9 @@ class Register
     /**
      * @return string
      */
-    public function getHash()
+    public function getPassword()
     {
-        return $this->hash;
+        return $this->password;
     }
 
     /**
@@ -154,6 +153,6 @@ class Register
      */
     public function getParams()
     {
-        return $this->params;
+        return (array)$this->params;
     }
 }
