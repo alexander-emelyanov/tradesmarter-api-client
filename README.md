@@ -3,7 +3,7 @@ TradeSmarter platform API Client
 
 This repository contains PHP Client for TradeSmarter platform.
 
-AnyOption is a trading platform for binary options.
+TradeSmarter is a trading platform for binary options.
 
 ## Installation
 Install using [Composer](http://getcomposer.org), doubtless.
