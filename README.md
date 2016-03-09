@@ -29,6 +29,26 @@ Assuming your credentials is valid, you are good to go!
 $countries = $client->countries();
 ```
 
+### Register new customer
+
+```php
+$request = new TradeSmarter\Request\Register([
+    'firstName' => 'Alexander',
+    'lastName' => 'Emelyanov',
+    'email' => md5(rand()) . '@gmail.com',
+    'confirmed' => 1,
+    'password' => md5('portal'),
+    'phone' => '+79851984667',
+    'country' => 'ru',
+    'locale' => 'en-US',
+    'params' => [],
+    'lead' => 0,
+]);
+
+/** @var \TradeSmarter\Responses\Register $response */
+$response = $client->register($request);
+```
+
 ## Contribution
 You are welcome!
 
