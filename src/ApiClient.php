@@ -66,7 +66,7 @@ class ApiClient
             'lead' => 0,
         ];
         $response = $this->makeRequest($url, $data);
-        return new Register(intval($response));
+        return new Register(intval(trim($response, '"')));
     }
 
     /**
