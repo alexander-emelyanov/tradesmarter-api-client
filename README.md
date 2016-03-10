@@ -1,5 +1,6 @@
 TradeSmarter platform API Client
 ====
+[![Build Status](https://img.shields.io/travis/alexander-emelyanov/tradesmarter-api-client/master.svg?style=flat-square)](https://travis-ci.org/alexander-emelyanov/tradesmarter-api-client)
 
 This repository contains PHP Client for TradeSmarter platform.
 
