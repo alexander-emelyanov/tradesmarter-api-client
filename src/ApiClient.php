@@ -5,6 +5,7 @@ namespace TradeSmarter;
 use GuzzleHttp;
 use TradeSmarter\Exceptions\EmailAlreadyExists;
 use TradeSmarter\Responses\Country;
+use TradeSmarter\Responses\Login;
 use TradeSmarter\Responses\Register;
 
 class ApiClient
@@ -46,7 +47,7 @@ class ApiClient
     }
 
     /**
-     * @param \TradeSmarter\Request\Register $request
+     * @param \TradeSmarter\Requests\Register $request
      *
      * @return \TradeSmarter\Responses\Register
      */
@@ -67,6 +68,32 @@ class ApiClient
         ];
         $response = $this->makeRequest($url, $data);
         return new Register(intval(trim($response, '"')));
+    }
+
+    /**
+     * Logs a user in and provides a session token for authenticated actions. This can be done either by email/password,
+     * or using the previous session token.
+     *
+     * @param \TradeSmarter\Requests\Login $request
+     * @return \TradeSmarter\Responses\Login
+     */
+    public function login($request){
+        $url = $this->url . '/index/login';
+        $data = [
+            'email' => $request->getEmail(),
+            'password' => md5($request->getPassword()),
+        ];
+        $response = $this->request($url, $data);
+        $payload = new Payload($response);
+        return new Login($payload);
+    }
+
+    protected function request($url, $data = []){
+        try{
+            return $this->httpClient->post($url, ['form_params' => $data])->getBody()->getContents();
+        } catch (GuzzleHttp\Exception\ServerException $exception) {
+            return $exception->getResponse()->getBody()->getContents();
+        }
     }
 
     /**
@@ -91,7 +118,7 @@ class ApiClient
                 throw new EmailAlreadyExists($payload, 'Email already exists');
             }
             default: {
-                throw new Exception($payload, 'Unknown error');
+                throw new Exception($payload, 'Unknown error. ' . print_r($payload, 1));
             }
         }
     }

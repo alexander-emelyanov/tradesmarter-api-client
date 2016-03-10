@@ -4,48 +4,34 @@ namespace TradeSmarter;
 
 class Response
 {
-    CONST FIELD_API_CODE = 'apiCode';
-
-    CONST FIELD_API_CODE_DESCRIPTION = 'apiCodeDescription';
-
-    CONST FIELD_USER_MESSAGES = 'userMessages';
-
-    CONST VALUE_API_CODE_G000 = 'G000';
-
     /**
-     * @var string
+     * Could not log in. Please verify that you're using the correct email and password.
      */
-    protected $apiCode = '';
+    const ERROR_INVALID_CREDENTIALS = 20;
 
-    /**
-     * @var string
-     */
-    protected $apiCodeDescription = '';
+    protected $data;
 
-    /**
-     * @var array
-     */
-    protected $userMessages = [];
-
-    public function __construct(Payload $payload){
-        $this->apiCode = $payload[static::FIELD_API_CODE];
-        $this->apiCodeDescription = $payload[static::FIELD_API_CODE_DESCRIPTION];
-        $this->userMessages = isset($payload[static::FIELD_USER_MESSAGES]) ? $payload[static::FIELD_USER_MESSAGES] : [];
+    public function __construct(Payload $payload)
+    {
+        $this->data = $payload;
     }
 
-    public function isSuccess(){
-        return ($this->apiCode == static::VALUE_API_CODE_G000);
+    public function isSuccess()
+    {
+         return ((isset($this->data['success']) && $this->data['success']) || !isset($this->data['error']));
     }
 
-    public function getApiCode(){
-        return $this->apiCode;
+    public function getErrorCode()
+    {
+        if (isset($this->data['error']['code'])){
+            return $this->data['error']['code'];
+        }
     }
 
-    public function getApiCodeDescription(){
-        return $this->apiCodeDescription;
-    }
-
-    public function getUserMessages(){
-        return $this->userMessages;
+    public function getErrorMessage()
+    {
+        if (isset($this->data['error']['message'])){
+            return $this->data['error']['message'];
+        }
     }
 }

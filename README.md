@@ -32,7 +32,7 @@ $countries = $client->countries();
 ### Register new customer
 
 ```php
-$request = new TradeSmarter\Request\Register([
+$request = new TradeSmarter\Requests\Register([
     'firstName' => 'Alexander',
     'lastName' => 'Emelyanov',
     'email' => md5(rand()) . '@gmail.com',

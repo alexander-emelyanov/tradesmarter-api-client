@@ -1,6 +1,6 @@
 <?php
 
-namespace TradeSmarter\Request;
+namespace TradeSmarter\Requests;
 
 class Register
 {
