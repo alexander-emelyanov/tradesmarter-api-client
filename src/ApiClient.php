@@ -37,7 +37,7 @@ class ApiClient
     public function countries()
     {
         $url = $this->url . '/index/countries';
-        $response = $this->makeRequest($url);
+        $response = $this->request($url);
         $payload = new Payload($response);
         $countries = [];
         foreach ($payload->getData() as $countryInfo){
@@ -47,8 +47,9 @@ class ApiClient
     }
 
     /**
-     * @param \TradeSmarter\Requests\Register $request
+     * Registers a new user.
      *
+     * @param \TradeSmarter\Requests\Register $request
      * @return \TradeSmarter\Responses\Register
      */
     public function register(\TradeSmarter\Requests\Register $request)
@@ -66,8 +67,17 @@ class ApiClient
             'landing' => json_encode($request->getParams()),
             'lead' => 0,
         ];
-        $response = $this->makeRequest($url, $data);
-        return new Register(intval(trim($response, '"')));
+        $response = $this->request($url, $data);
+
+        // Ugly hack for unpredictable API. Some times this API returns JSON, sometimes - integer...
+        try{
+            $payload = new Payload($response);
+        } catch (\Exception $e){
+            $payload = new Payload("{\"id\":$response}");
+        }
+
+        // $payload = new Payload($response);
+        return new Register($payload);
     }
 
     /**
@@ -77,7 +87,8 @@ class ApiClient
      * @param \TradeSmarter\Requests\Login $request
      * @return \TradeSmarter\Responses\Login
      */
-    public function login(\TradeSmarter\Requests\Login $request){
+    public function login(\TradeSmarter\Requests\Login $request)
+    {
         $url = $this->url . '/index/login';
         $data = [
             'email' => $request->getEmail(),
@@ -88,38 +99,19 @@ class ApiClient
         return new Login($payload);
     }
 
-    protected function request($url, $data = []){
+    /**
+     * Send request to TradeSmarter API endpoint.
+     *
+     * @param string $url
+     * @param array $data
+     * @return string
+     */
+    protected function request($url, $data = [])
+    {
         try{
             return $this->httpClient->post($url, ['form_params' => $data])->getBody()->getContents();
         } catch (GuzzleHttp\Exception\ServerException $exception) {
             return $exception->getResponse()->getBody()->getContents();
-        }
-    }
-
-    /**
-     * @param $url
-     * @param $data
-     * @return string
-     */
-    protected function makeRequest($url, $data = []){
-        try{
-            return $this->httpClient->post($url, ['form_params' => $data])->getBody()->getContents();
-        } catch (GuzzleHttp\Exception\ServerException $exception) {
-            $serverResponse = $exception->getResponse()->getBody()->getContents();
-            $this->processFailedResponse(new Payload($serverResponse));
-        }
-    }
-
-    protected function processFailedResponse(Payload $payload)
-    {
-        $errorCode = isset($payload['error']['code']) ? $payload['error']['code'] : null;
-        switch ($errorCode) {
-            case static::ERROR_EMAIL_ALREADY_EXISTS: {
-                throw new EmailAlreadyExists($payload, 'Email already exists');
-            }
-            default: {
-                throw new Exception($payload, 'Unknown error. ' . print_r($payload, 1));
-            }
         }
     }
 }
