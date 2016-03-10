@@ -1,0 +1,14 @@
+language: php
+php:
+- '5.6'
+- '7.0'
+- hhvm
+- nightly
+before_script:
+    - cp phpunit.xml.dist phpunit.xml
+    - flags=""
+    - composer install $flags
+script: vendor/bin/phpunit
+notifications:
+  slack:
+    secure: A7o7kZQJPmfLenFpZBathaW6ellAHGSLyKejWcytsu2lvujbhAMKZbN5HHJk5IpF2W4lq2KJfFJURFCNUPEKo2kLVkOX8mWTa9MpmEF4e7NqUTLLdZwDyToKNC9YQvCskjeVAcJ7iNIXAsWnDOZxNB11MIKeFjV760XN9+q+Kn1OLJ+IElJtc6pbgcI43+/K+hKsDcU6CmFrE734273QlbZ9mHVdnFBNN39IlNEa+fyIUHe8Z2L0uFDwiLah+8QyV58YnTeLCwqmUmzVRloSC5UVZJ9W5ZORZ7apaJOJ70lqGxxGaCLHMUTg2PGO9BEcByDMh+2oLw5VdgPnJUDXh9sukK9Nwy6zBgtt7Puyo8EWmaHjOADursAY4WUvJ9i1Ae59Saqyfg8M4vID+gXKvtvVnkqEhJqvDmSOQ+9HKIXeU/3tJ1p2vM8CAiJtRc32vvj8Y0SX838m+FX5MHbE4zZ0PCF/5SpukyYrlhW9X5VEQg6cREmotRWn6szYoaJnU0F1HTRP6Be0GWGy49Ij9ut7duM9FdqID3TFsaW9v0z01EPfFonhW3sqFBavRchhbhvZGedY12CQCVnMf7NHy4cxoB1lxZumbU51d5Mm+B954lm3+qtdQRqsr+cIycfHGpRPIiCTnEM0Y5+CWz+vu9Hc/Sw5Icz1aou7hHSs4Uk=
