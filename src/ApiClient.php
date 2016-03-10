@@ -51,7 +51,7 @@ class ApiClient
      *
      * @return \TradeSmarter\Responses\Register
      */
-    public function register($request)
+    public function register(\TradeSmarter\Requests\Register $request)
     {
         $url = $this->url . '/index/register';
         $data = [
@@ -77,7 +77,7 @@ class ApiClient
      * @param \TradeSmarter\Requests\Login $request
      * @return \TradeSmarter\Responses\Login
      */
-    public function login($request){
+    public function login(\TradeSmarter\Requests\Login $request){
         $url = $this->url . '/index/login';
         $data = [
             'email' => $request->getEmail(),
