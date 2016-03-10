@@ -2,22 +2,30 @@
 
 namespace TradeSmarter\Responses;
 
-class Register
+use TradeSmarter\Payload;
+use TradeSmarter\Response;
+
+class Register extends Response
 {
+    const FIELD_ID = 'id';
+
     /**
-     * @var string
+     * @var int
      */
     protected $id;
 
-    public function __construct($id)
+    public function __construct(Payload $payload)
     {
-        $this->id = $id;
+        parent::__construct($payload);
+        if ($this->isSuccess()){
+            $this->id = $payload[static::FIELD_ID];
+        }
     }
 
     /**
      * Returns the newly created userID.
      *
-     * @return string
+     * @return int
      */
     public function getId()
     {
