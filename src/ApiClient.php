@@ -40,7 +40,7 @@ class ApiClient
         $payload = new Payload($response);
         $countries = [];
         foreach ($payload->getData() as $countryInfo){
-            $countries[] = new Country($countryInfo['id'], $countryInfo['name'], $countryInfo['dialCode']);
+            $countries[] = new Country($countryInfo['id'], $countryInfo['name'], $countryInfo['dialCode'], $countryInfo['defLang']);
         }
         return $countries;
     }

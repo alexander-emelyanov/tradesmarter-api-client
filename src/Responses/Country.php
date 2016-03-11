@@ -19,11 +19,17 @@ class Country
      */
     public $dialCode;
 
-    public function __construct($id, $name, $dialCode)
+    /**
+     * @var string
+     */
+    public $defaultLanguage;
+
+    public function __construct($id, $name, $dialCode, $defaultLanguage = 'en')
     {
         $this->id = $id;
         $this->name = $name;
         $this->dialCode = $dialCode;
+        $this->defaultLanguage = $defaultLanguage;
     }
 
     /**
@@ -48,5 +54,10 @@ class Country
     public function getDialCode()
     {
         return $this->dialCode;
+    }
+
+    public function getDefaultLanguage()
+    {
+        return $this-defaultLanguage;
     }
 }
