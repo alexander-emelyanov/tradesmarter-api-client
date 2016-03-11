@@ -2,6 +2,8 @@
 
 namespace TradeSmarter\Responses;
 
+use TradeSmarter\Exception;
+use TradeSmarter\Exceptions\BlockedCountry;
 use TradeSmarter\Exceptions\EmailAlreadyExists;
 use TradeSmarter\Payload;
 use TradeSmarter\Response;
@@ -21,8 +23,16 @@ class Register extends Response
         if ($this->isSuccess()){
             $this->id = $payload[static::FIELD_ID];
         } else {
-            if ($this->getErrorCode() == static::ERROR_EMAIL_ALREADY_EXISTS){
-                throw new EmailAlreadyExists($payload, 'Password invalid');
+            switch ($this->getErrorCode()){
+                case static::ERROR_EMAIL_ALREADY_EXISTS: {
+                    throw new EmailAlreadyExists($payload, 'Password invalid');
+                }
+                case static::ERROR_BLOCKED_COUNTRY: {
+                    throw new BlockedCountry($payload, 'Country is not allowed');
+                }
+                default: {
+                    throw new Exception($payload, 'Trade platform error');
+                }
             }
         }
     }

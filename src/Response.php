@@ -14,6 +14,11 @@ class Response
      */
     const ERROR_INVALID_CREDENTIALS = 20;
 
+    /**
+     * Banned country - not in use
+     */
+    const ERROR_BLOCKED_COUNTRY = 102;
+
     protected $data;
 
     public function __construct(Payload $payload)
