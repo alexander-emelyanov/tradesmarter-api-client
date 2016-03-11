@@ -3,7 +3,6 @@
 namespace TradeSmarter;
 
 use GuzzleHttp;
-use TradeSmarter\Exceptions\EmailAlreadyExists;
 use TradeSmarter\Responses\Country;
 use TradeSmarter\Responses\Login;
 use TradeSmarter\Responses\Register;

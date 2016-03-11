@@ -5,6 +5,11 @@ namespace TradeSmarter;
 class Response
 {
     /**
+     * Email already exists
+     */
+    const ERROR_EMAIL_ALREADY_EXISTS = 10;
+
+    /**
      * Could not log in. Please verify that you're using the correct email and password.
      */
     const ERROR_INVALID_CREDENTIALS = 20;
