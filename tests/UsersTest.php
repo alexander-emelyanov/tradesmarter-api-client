@@ -12,7 +12,7 @@ class UsersTest extends TestCase
         parent::__construct();
     }
 
-    public function testCountries(){
+    public function testCountriesRetrieving(){
         $countries = $this->apiClient->countries();
         $this->assertNotEmpty($countries, 'Retrieved countries list is empty');
     }

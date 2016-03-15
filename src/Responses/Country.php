@@ -58,6 +58,6 @@ class Country
 
     public function getDefaultLanguage()
     {
-        return $this-defaultLanguage;
+        return $this->defaultLanguage;
     }
 }
