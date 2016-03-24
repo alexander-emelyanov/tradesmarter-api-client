@@ -47,7 +47,7 @@ class Transactions extends Request
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isFormatted()
     {
