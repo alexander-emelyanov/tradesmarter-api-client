@@ -2,7 +2,9 @@
 
 namespace TradeSmarter\Requests;
 
-class Register
+use TradeSmarter\Request;
+
+class Register extends Request
 {
     /**
      * @var string The user’s email address.

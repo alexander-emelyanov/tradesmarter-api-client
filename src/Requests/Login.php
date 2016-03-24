@@ -2,7 +2,9 @@
 
 namespace TradeSmarter\Requests;
 
-class Login
+use TradeSmarter\Request;
+
+class Login extends Request
 {
     /**
      * @var string
@@ -13,13 +15,6 @@ class Login
      * @var string
      */
     protected $password;
-
-    public function __construct($params = [])
-    {
-        foreach ($params as $name => $value) {
-            $this->{$name} = $value;
-        }
-    }
 
     /**
      * Returns user's email.

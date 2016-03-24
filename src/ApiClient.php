@@ -4,8 +4,11 @@ namespace TradeSmarter;
 
 use GuzzleHttp;
 use TradeSmarter\Responses\Country;
-use TradeSmarter\Responses\Login;
+use TradeSmarter\Responses\Login as LoginResponse;
 use TradeSmarter\Responses\Register;
+use TradeSmarter\Responses\Transactions as TransactionsResponse;
+use TradeSmarter\Requests\Login as LoginRequest;
+use TradeSmarter\Requests\Transactions as TransactionsRequest;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerAwareInterface;
 
@@ -88,7 +91,6 @@ class ApiClient implements LoggerAwareInterface
             $payload = new Payload("{\"id\":$response}");
         }
 
-        // $payload = new Payload($response);
         return new Register($payload);
     }
 
@@ -100,7 +102,7 @@ class ApiClient implements LoggerAwareInterface
      *
      * @return \TradeSmarter\Responses\Login
      */
-    public function login(\TradeSmarter\Requests\Login $request)
+    public function login(LoginRequest $request)
     {
         $url = $this->url.'/index/login';
         $data = [
@@ -110,7 +112,32 @@ class ApiClient implements LoggerAwareInterface
         $response = $this->request($url, $data);
         $payload = new Payload($response);
 
-        return new Login($payload);
+        return new LoginResponse($payload);
+    }
+
+    /**
+     * Gets a user’s paginated transaction history.
+     *
+     * @param \TradeSmarter\Requests\Transactions $request
+     *
+     * @return \TradeSmarter\Responses\Transactions
+     */
+    public function transactions(TransactionsRequest $request)
+    {
+        $loginResponse = $this->login(new LoginRequest([
+            'email'    => $request->getEmail(),
+            'password' => $request->getPassword(),
+        ]));
+
+        $url = $this->url.'/user/transactions';
+        $data = [
+            'session'   => $loginResponse->getSession(),
+            'formatted' => $request->isFormatted(),
+        ];
+        $response = $this->request($url, $data);
+        $payload = new Payload($response);
+
+        return new TransactionsResponse($payload);
     }
 
     /**
