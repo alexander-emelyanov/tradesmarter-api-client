@@ -6,8 +6,10 @@ use GuzzleHttp;
 use TradeSmarter\Responses\Country;
 use TradeSmarter\Responses\Login;
 use TradeSmarter\Responses\Register;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareInterface;
 
-class ApiClient
+class ApiClient implements LoggerAwareInterface
 {
     const ERROR_EMAIL_ALREADY_EXISTS = 10;
 
@@ -22,10 +24,19 @@ class ApiClient
      */
     protected $httpClient;
 
-    public function __construct($url, GuzzleHttp\ClientInterface $httpClient = null)
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger = null;
+
+    public function __construct($url)
     {
         $this->url = $url;
-        $this->httpClient = $httpClient ?: new GuzzleHttp\Client();
+    }
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     /**
@@ -113,9 +124,31 @@ class ApiClient
     protected function request($url, $data = [])
     {
         try {
-            return $this->httpClient->post($url, ['form_params' => $data])->getBody()->getContents();
+            return (string)$this->getHttpClient()->post($url, ['form_params' => $data])->getBody();
         } catch (GuzzleHttp\Exception\ServerException $exception) {
-            return $exception->getResponse()->getBody()->getContents();
+            return (string)$exception->getResponse()->getBody();
         }
+    }
+
+    protected function getHttpClient()
+    {
+        if (!is_null($this->httpClient)) {
+            return $this->httpClient;
+        }
+
+        $stack = GuzzleHttp\HandlerStack::create();
+
+        if ($this->logger instanceof LoggerInterface) {
+            $stack->push(GuzzleHttp\Middleware::log(
+                $this->logger,
+                new GuzzleHttp\MessageFormatter(GuzzleHttp\MessageFormatter::DEBUG)
+            ));
+        }
+
+        $this->httpClient = new GuzzleHttp\Client([
+            'handler'  => $stack,
+        ]);
+
+        return $this->httpClient;
     }
 }

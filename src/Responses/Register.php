@@ -25,7 +25,7 @@ class Register extends Response
         } else {
             switch ($this->getErrorCode()) {
                 case static::ERROR_EMAIL_ALREADY_EXISTS: {
-                    throw new EmailAlreadyExists($payload, 'Password invalid');
+                    throw new EmailAlreadyExists($payload, 'Email already exists');
                 }
                 case static::ERROR_BLOCKED_COUNTRY: {
                     throw new BlockedCountry($payload, 'Country is not allowed');
