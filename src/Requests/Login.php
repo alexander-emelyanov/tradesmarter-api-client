@@ -22,20 +22,22 @@ class Login
     }
 
     /**
-     * Returns user's email
+     * Returns user's email.
      *
      * @return string
      */
-    public function getEmail(){
+    public function getEmail()
+    {
         return $this->email;
     }
 
     /**
-     * Returns plain user's password
+     * Returns plain user's password.
      *
      * @return string
      */
-    public function getPassword(){
+    public function getPassword()
+    {
         return $this->password;
     }
 }

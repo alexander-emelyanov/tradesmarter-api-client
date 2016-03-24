@@ -35,13 +35,14 @@ class ApiClient
      */
     public function countries()
     {
-        $url = $this->url . '/index/countries';
+        $url = $this->url.'/index/countries';
         $response = $this->request($url);
         $payload = new Payload($response);
         $countries = [];
-        foreach ($payload->getData() as $countryInfo){
+        foreach ($payload->getData() as $countryInfo) {
             $countries[] = new Country($countryInfo['id'], $countryInfo['name'], $countryInfo['dialCode'], $countryInfo['defLang']);
         }
+
         return $countries;
     }
 
@@ -49,29 +50,30 @@ class ApiClient
      * Registers a new user.
      *
      * @param \TradeSmarter\Requests\Register $request
+     *
      * @return \TradeSmarter\Responses\Register
      */
     public function register(\TradeSmarter\Requests\Register $request)
     {
-        $url = $this->url . '/index/register';
+        $url = $this->url.'/index/register';
         $data = [
             'firstName' => $request->getFirstName(),
-            'lastName' => $request->getLastName(),
-            'email' => $request->getEmail(),
+            'lastName'  => $request->getLastName(),
+            'email'     => $request->getEmail(),
             'confirmed' => 1,
-            'password' => md5($request->getPassword()),
-            'phone' => $request->getPhone(),
-            'country' => $request->getCountry(),
-            'locale' => $request->getLocale(),
-            'landing' => json_encode($request->getParams()),
-            'lead' => 0,
+            'password'  => md5($request->getPassword()),
+            'phone'     => $request->getPhone(),
+            'country'   => $request->getCountry(),
+            'locale'    => $request->getLocale(),
+            'landing'   => json_encode($request->getParams()),
+            'lead'      => 0,
         ];
         $response = $this->request($url, $data);
 
         // Ugly hack for unpredictable API. Some times this API returns JSON, sometimes - integer...
-        try{
+        try {
             $payload = new Payload($response);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $payload = new Payload("{\"id\":$response}");
         }
 
@@ -84,17 +86,19 @@ class ApiClient
      * or using the previous session token.
      *
      * @param \TradeSmarter\Requests\Login $request
+     *
      * @return \TradeSmarter\Responses\Login
      */
     public function login(\TradeSmarter\Requests\Login $request)
     {
-        $url = $this->url . '/index/login';
+        $url = $this->url.'/index/login';
         $data = [
-            'email' => $request->getEmail(),
+            'email'    => $request->getEmail(),
             'password' => md5($request->getPassword()),
         ];
         $response = $this->request($url, $data);
         $payload = new Payload($response);
+
         return new Login($payload);
     }
 
@@ -102,12 +106,13 @@ class ApiClient
      * Send request to TradeSmarter API endpoint.
      *
      * @param string $url
-     * @param array $data
+     * @param array  $data
+     *
      * @return string
      */
     protected function request($url, $data = [])
     {
-        try{
+        try {
             return $this->httpClient->post($url, ['form_params' => $data])->getBody()->getContents();
         } catch (GuzzleHttp\Exception\ServerException $exception) {
             return $exception->getResponse()->getBody()->getContents();

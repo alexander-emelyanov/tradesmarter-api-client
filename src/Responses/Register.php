@@ -20,10 +20,10 @@ class Register extends Response
     public function __construct(Payload $payload)
     {
         parent::__construct($payload);
-        if ($this->isSuccess()){
+        if ($this->isSuccess()) {
             $this->id = $payload[static::FIELD_ID];
         } else {
-            switch ($this->getErrorCode()){
+            switch ($this->getErrorCode()) {
                 case static::ERROR_EMAIL_ALREADY_EXISTS: {
                     throw new EmailAlreadyExists($payload, 'Password invalid');
                 }

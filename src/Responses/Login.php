@@ -21,11 +21,11 @@ class Login extends Response
     public function __construct(Payload $payload)
     {
         parent::__construct($payload);
-        if ($this->isSuccess()){
+        if ($this->isSuccess()) {
             $this->session = $payload[static::FIELD_SESSION];
             $this->userId = $payload[static::FIELD_USER][static::FIELD_USER_ID];
         } else {
-            if ($this->getErrorCode() == static::ERROR_INVALID_CREDENTIALS){
+            if ($this->getErrorCode() == static::ERROR_INVALID_CREDENTIALS) {
                 throw new InvalidCredentials($payload, 'Password invalid');
             }
         }

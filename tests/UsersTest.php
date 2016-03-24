@@ -8,11 +8,13 @@ use TradeSmarter\Requests\Register;
 
 class UsersTest extends TestCase
 {
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function testCountriesRetrieving(){
+    public function testCountriesRetrieving()
+    {
         $countries = $this->apiClient->countries();
         $this->assertNotEmpty($countries, 'Retrieved countries list is empty');
     }
@@ -20,28 +22,30 @@ class UsersTest extends TestCase
     /**
      * @return \TradeSmarter\Responses\Country
      */
-    public function getRandomCountry(){
+    public function getRandomCountry()
+    {
         $countries = $this->apiClient->countries();
         shuffle($countries);
+
         return array_pop($countries);
     }
 
     public function testRegister()
     {
-        $email = 'text' . time() . '@gmail.com';
+        $email = 'text'.time().'@gmail.com';
         $password = md5(rand());
 
         $request = new Register([
             'firstName' => $this->faker->firstName,
-            'lastName' => $this->faker->lastName,
-            'email' => $email,
+            'lastName'  => $this->faker->lastName,
+            'email'     => $email,
             'confirmed' => 1,
-            'password' => $password,
-            'phone' => $this->faker->randomNumber(8),
-            'country' => $this->getRandomCountry()->getId(),
-            'locale' => 'en-US',
-            'params' => [],
-            'lead' => 0,
+            'password'  => $password,
+            'phone'     => $this->faker->randomNumber(8),
+            'country'   => $this->getRandomCountry()->getId(),
+            'locale'    => 'en-US',
+            'params'    => [],
+            'lead'      => 0,
         ]);
 
         /** @var \TradeSmarter\Responses\Register $response */
@@ -49,7 +53,7 @@ class UsersTest extends TestCase
         $this->assertGreaterThan(0, $response->getId(), 'User is not registered, his ID not received');
 
         $request = new Login([
-            'email' => $email,
+            'email'    => $email,
             'password' => $password,
         ]);
 
@@ -58,21 +62,22 @@ class UsersTest extends TestCase
         $this->assertNotEmpty($response->getSession(), 'Login failed, session not retrieved.');
     }
 
-    public function testEmailAlreadyExistsException(){
-        $email = 'test.2' . time() . '@gmail.com';
+    public function testEmailAlreadyExistsException()
+    {
+        $email = 'test.2'.time().'@gmail.com';
         $password = md5(rand());
 
         $request = new Register([
             'firstName' => $this->faker->firstName,
-            'lastName' => $this->faker->lastName,
-            'email' => $email,
+            'lastName'  => $this->faker->lastName,
+            'email'     => $email,
             'confirmed' => 1,
-            'password' => $password,
-            'phone' => $this->faker->randomNumber(8),
-            'country' => $this->getRandomCountry()->getId(),
-            'locale' => 'en-US',
-            'params' => [],
-            'lead' => 0,
+            'password'  => $password,
+            'phone'     => $this->faker->randomNumber(8),
+            'country'   => $this->getRandomCountry()->getId(),
+            'locale'    => 'en-US',
+            'params'    => [],
+            'lead'      => 0,
         ]);
 
         /** @var \TradeSmarter\Responses\Register $response */
@@ -82,9 +87,9 @@ class UsersTest extends TestCase
         try {
             $this->apiClient->register($request);
             $this->assertTrue(false, 'Abnormal registration behavior. Email already exists error not received.');
-        } catch (EmailAlreadyExists $e){
+        } catch (EmailAlreadyExists $e) {
             $this->assertTrue(true);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->assertTrue(false, '\TradeSmarter\EmailAlreadyExists exception not raised.');
         }
     }

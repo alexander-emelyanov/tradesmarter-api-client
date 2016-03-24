@@ -13,6 +13,7 @@ class Exception extends \Exception
     {
         $exception = parent::__construct($message, $code, $previous);
         $this->response = $response;
+
         return $exception;
     }
 

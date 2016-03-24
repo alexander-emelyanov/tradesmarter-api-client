@@ -4,11 +4,13 @@ namespace TradeSmarter\Tests;
 
 class CountriesTest extends TestCase
 {
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function testCountries(){
+    public function testCountries()
+    {
         $countries = $this->apiClient->countries();
         $this->assertNotEmpty($countries, 'Retrieved countries list is empty');
         foreach ($countries as $country) {
@@ -18,6 +20,4 @@ class CountriesTest extends TestCase
             $this->assertNotEmpty($country->getDefaultLanguage(), 'Country has not default language');
         }
     }
-
-
 }

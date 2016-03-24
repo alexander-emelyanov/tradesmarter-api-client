@@ -19,7 +19,7 @@ class Payload implements \ArrayAccess, \JsonSerializable
      */
     public function __construct($json)
     {
-        $data = json_decode((string)$json, true);
+        $data = json_decode((string) $json, true);
 
         if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
             throw new \UnexpectedValueException('Invalid JSON message.');
@@ -56,6 +56,7 @@ class Payload implements \ArrayAccess, \JsonSerializable
     {
         if (is_null($offset)) {
             $this->data[] = $value;
+
             return;
         }
         $this->data[$offset] = $value;
@@ -63,6 +64,7 @@ class Payload implements \ArrayAccess, \JsonSerializable
 
     /**
      * @param mixed $offset
+     *
      * @return bool
      */
     public function offsetExists($offset)
@@ -80,6 +82,7 @@ class Payload implements \ArrayAccess, \JsonSerializable
 
     /**
      * @param mixed $offset
+     *
      * @return null
      */
     public function offsetGet($offset)
