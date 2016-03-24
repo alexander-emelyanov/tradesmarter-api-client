@@ -20,7 +20,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $url = getenv('TRADESMARTER_URL');
-        if (!$url){
+        if (!$url) {
             throw new \Exception('Environment variable TRADESMARTER_URL is required');
         }
         $this->apiClient = new ApiClient($url);
@@ -29,7 +29,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Free resources
+     * Free resources.
      */
     public function tearDown()
     {

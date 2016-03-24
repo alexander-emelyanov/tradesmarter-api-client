@@ -6,5 +6,4 @@ use TradeSmarter\Exception;
 
 class EmailAlreadyExists extends Exception
 {
-
 }

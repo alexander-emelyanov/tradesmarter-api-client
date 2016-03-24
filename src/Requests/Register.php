@@ -153,6 +153,6 @@ class Register
      */
     public function getParams()
     {
-        return (array)$this->params;
+        return (array) $this->params;
     }
 }
