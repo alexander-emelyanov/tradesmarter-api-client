@@ -9,19 +9,19 @@ class Transactions extends Response
 {
     const FIELD_ROWS = 'rows';
 
-    CONST FIELD_SUMMARY = 'summary';
+    const FIELD_SUMMARY = 'summary';
 
-    CONST FIELD_DEPOSITS = 'deposits';
+    const FIELD_DEPOSITS = 'deposits';
 
-    CONST FIELD_PROFIT = 'profit';
+    const FIELD_PROFIT = 'profit';
 
-    CONST FIELD_BONUSES = 'bonuses';
+    const FIELD_BONUSES = 'bonuses';
 
-    CONST FIELD_WITHDRAWALS = 'withdrawals';
+    const FIELD_WITHDRAWALS = 'withdrawals';
 
     /**
      * Returns deposits amounts. With the currency sign.
-     * Example: '-$2.00'
+     * Example: '-$2.00'.
      *
      * @return string
      */
@@ -32,7 +32,7 @@ class Transactions extends Response
 
     /**
      * Returns total profit. With the currency sign.
-     * Example: '-$2.00'
+     * Example: '-$2.00'.
      *
      * @return string
      */
@@ -43,7 +43,7 @@ class Transactions extends Response
 
     /**
      * Returns bonuses amounts. With the currency sign.
-     * Example: '-$2.00'
+     * Example: '-$2.00'.
      *
      * @return string
      */
@@ -54,7 +54,7 @@ class Transactions extends Response
 
     /**
      * Returns withdrawals amounts. With the currency sign.
-     * Example: '-$2.00'
+     * Example: '-$2.00'.
      *
      * @return string
      */

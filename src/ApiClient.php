@@ -3,14 +3,14 @@
 namespace TradeSmarter;
 
 use GuzzleHttp;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use TradeSmarter\Requests\Login as LoginRequest;
+use TradeSmarter\Requests\Transactions as TransactionsRequest;
 use TradeSmarter\Responses\Country;
 use TradeSmarter\Responses\Login as LoginResponse;
 use TradeSmarter\Responses\Register;
 use TradeSmarter\Responses\Transactions as TransactionsResponse;
-use TradeSmarter\Requests\Login as LoginRequest;
-use TradeSmarter\Requests\Transactions as TransactionsRequest;
-use Psr\Log\LoggerInterface;
-use Psr\Log\LoggerAwareInterface;
 
 class ApiClient implements LoggerAwareInterface
 {
@@ -151,9 +151,9 @@ class ApiClient implements LoggerAwareInterface
     protected function request($url, $data = [])
     {
         try {
-            return (string)$this->getHttpClient()->post($url, ['form_params' => $data])->getBody();
+            return (string) $this->getHttpClient()->post($url, ['form_params' => $data])->getBody();
         } catch (GuzzleHttp\Exception\ServerException $exception) {
-            return (string)$exception->getResponse()->getBody();
+            return (string) $exception->getResponse()->getBody();
         }
     }
 
