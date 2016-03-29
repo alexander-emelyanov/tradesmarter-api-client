@@ -42,7 +42,7 @@ class UserInfo extends Response
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isConfirmed()
     {
@@ -50,7 +50,7 @@ class UserInfo extends Response
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isValidated()
     {
@@ -58,7 +58,7 @@ class UserInfo extends Response
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isFrozen()
     {
@@ -66,7 +66,7 @@ class UserInfo extends Response
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isBlocked()
     {
