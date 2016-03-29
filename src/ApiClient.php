@@ -11,6 +11,7 @@ use TradeSmarter\Responses\Country;
 use TradeSmarter\Responses\Login as LoginResponse;
 use TradeSmarter\Responses\Register;
 use TradeSmarter\Responses\Transactions as TransactionsResponse;
+use TradeSmarter\Responses\UserInfo as UserInfoResponse;
 
 class ApiClient implements LoggerAwareInterface
 {
@@ -113,6 +114,27 @@ class ApiClient implements LoggerAwareInterface
         $payload = new Payload($response);
 
         return new LoginResponse($payload);
+    }
+
+    /**
+     * Logs a user in and provides a session token for authenticated actions. This can be done either by email/password,
+     * or using the previous session token.
+     *
+     * @param \TradeSmarter\Requests\Login $request
+     *
+     * @return \TradeSmarter\Responses\UserInfo
+     */
+    public function getUserInfo(LoginRequest $request){
+        $loginResponse = $this->login($request);
+
+        $url = $this->url.'/user/info';
+        $data = [
+            'session' => $loginResponse->getSession(),
+        ];
+        $response = $this->request($url, $data);
+        $payload = new Payload($response);
+
+        return new UserInfoResponse($payload);
     }
 
     /**

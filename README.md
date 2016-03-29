@@ -36,20 +36,44 @@ $countries = $client->countries();
 
 ```php
 $request = new TradeSmarter\Requests\Register([
-    'firstName' => 'Alexander',
-    'lastName' => 'Emelyanov',
-    'email' => md5(rand()) . '@gmail.com',
+    'firstName' => 'John',
+    'lastName' => 'Smith',
+    'email' => 'john.smith@gmail.com',
     'confirmed' => 1,
-    'password' => md5('portal'),
-    'phone' => '+79851984667',
-    'country' => 'ru',
-    'locale' => 'en-US',
+    'password' => 'qwerty',
+    'phone' => '+123456789',
+    'country' => 'gb',
+    'locale' => 'en-GB',
     'params' => [],
     'lead' => 0,
 ]);
 
 /** @var \TradeSmarter\Responses\Register $response */
 $response = $client->register($request);
+```
+
+### Login user
+
+```php
+$request = new \TradeSmarter\Requests\Login([
+    'email' => 'john.smith@gmail.com',
+    'password' => 'qwerty',
+]);
+
+/** @var \TradeSmarter\Responses\Login $response */
+$response = $client->login($request);
+```
+
+### Get user info
+
+```php
+$request = new \TradeSmarter\Requests\Login([
+    'email' => 'john.smith@gmail.com',
+    'password' => 'qwerty',
+]);
+
+/** @var \TradeSmarter\Responses\UserInfo $response */
+$response = $client->getUserInfo($request);
 ```
 
 ## Contribution

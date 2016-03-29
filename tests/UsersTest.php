@@ -60,6 +60,10 @@ class UsersTest extends TestCase
         /** @var \TradeSmarter\Responses\Login $response */
         $response = $this->apiClient->login($request);
         $this->assertNotEmpty($response->getSession(), 'Login failed, session not retrieved.');
+
+        /** @var \TradeSmarter\Responses\UserInfo $response */
+        $response = $this->apiClient->getUserInfo($request);
+        $this->assertNotEmpty($response->getUserId(), 'User information not retrieved.');
     }
 
     public function testEmailAlreadyExistsException()
