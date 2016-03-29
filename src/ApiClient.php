@@ -200,4 +200,22 @@ class ApiClient implements LoggerAwareInterface
 
         return $this->httpClient;
     }
+
+    /**
+     * Returns currencies list for platform.
+     *
+     * @return array
+     */
+    public static function getCurrenciesDictionary()
+    {
+        return [
+            1 => 'USD',
+            2 => 'EUR',
+            3 => 'AUD',
+            4 => 'CNY',
+            5 => 'GBP',
+            6 => 'JPY',
+            7 => 'RUB',
+        ];
+    }
 }

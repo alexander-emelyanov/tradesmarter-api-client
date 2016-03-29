@@ -2,6 +2,7 @@
 
 namespace TradeSmarter\Responses;
 
+use TradeSmarter\ApiClient;
 use TradeSmarter\Exception;
 use TradeSmarter\Payload;
 use TradeSmarter\Response;
@@ -81,7 +82,10 @@ class UserInfo extends Response
     }
 
     /**
-     * @return int
+     * ISO 3 symbols code of user's account currency.
+     * Example: 'USD'.
+     *
+     * @return string
      */
     public function getUserCurrency()
     {
@@ -127,7 +131,7 @@ class UserInfo extends Response
     protected $affiliateId;
 
     /**
-     * @var int
+     * @var string
      */
     protected $userCurrency;
 
@@ -135,6 +139,7 @@ class UserInfo extends Response
     {
         parent::__construct($payload);
         if ($this->isSuccess()) {
+            $currenciesDictionary = ApiClient::getCurrenciesDictionary();
             $this->userId = $this->data[static::FIELD_USER_ID];
             $this->dateOfBirth = $this->data[static::FIELD_DATE_OF_BIRTH];
             $this->confirmed = $this->data[static::FIELD_CONFIRMED];
@@ -142,7 +147,7 @@ class UserInfo extends Response
             $this->frozen = $this->data[static::FIELD_FROZEN];
             $this->blocked = $this->data[static::FIELD_BLOCKED];
             $this->affiliateId = $this->data[static::FIELD_AFFILIATE_ID];
-            $this->userCurrency = $this->data[static::FIELD_USER_CURRENCY];
+            $this->userCurrency = isset($currenciesDictionary[$this->data[static::FIELD_USER_CURRENCY]]) ? $currenciesDictionary[$this->data[static::FIELD_USER_CURRENCY]] : null;
         } else {
             switch ($this->getErrorCode()) {
                 default: {
