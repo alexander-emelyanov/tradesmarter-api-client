@@ -124,7 +124,8 @@ class ApiClient implements LoggerAwareInterface
      *
      * @return \TradeSmarter\Responses\UserInfo
      */
-    public function getUserInfo(LoginRequest $request){
+    public function getUserInfo(LoginRequest $request)
+    {
         $loginResponse = $this->login($request);
 
         $url = $this->url.'/user/info';
