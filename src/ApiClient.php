@@ -6,6 +6,7 @@ use GuzzleHttp;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use TradeSmarter\Requests\Login as LoginRequest;
+use TradeSmarter\Requests\Register as RegisterRequest;
 use TradeSmarter\Requests\Transactions as TransactionsRequest;
 use TradeSmarter\Responses\Country;
 use TradeSmarter\Responses\Login as LoginResponse;
@@ -68,7 +69,7 @@ class ApiClient implements LoggerAwareInterface
      *
      * @return \TradeSmarter\Responses\Register
      */
-    public function register(\TradeSmarter\Requests\Register $request)
+    public function register(RegisterRequest $request)
     {
         $url = $this->url.'/index/register';
         $data = [
