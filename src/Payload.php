@@ -3,7 +3,7 @@
 namespace TradeSmarter;
 
 /**
- * Stores incoming or outgoing message data for an Opteck API call.
+ * Stores incoming or outgoing message data for an TradeSmarter API call.
  */
 class Payload implements \ArrayAccess, \JsonSerializable
 {
